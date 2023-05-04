@@ -1,12 +1,48 @@
 import React from 'react';
 import bg from '../img/bg.png';
+import Navbar from '../components/Navbar';
+import CardEvent from '../components/CardEvent';
+const eventList = [
+  {
+    title: 'Sự kiện 1',
+    author: 'Đầm Sen Park',
+    datetime: '30/05/2021 - 01/06/2021',
+    price: '25.000',
+    img: require('../img/img1.png'),
+  },
+  {
+    title: 'Sự kiện 1',
+    author: 'Đầm Sen Park',
+    datetime: '30/05/2021 - 01/06/2021',
+    price: '25.000',
+    img: require('../img/img1.png'),
+  },
+  {
+    title: 'Sự kiện 3',
+    author: 'Đầm Sen Park',
+    datetime: '30/05/2021 - 01/06/2021',
+    price: '50.000',
+    img: require('../img/img2.png'),
+  },
+  {
+    title: 'Sự kiện 4',
+    author: 'Đầm Sen Park',
+    datetime: '30/05/2021 - 01/06/2021',
+    price: '55.000',
+    img: require('../img/img3.png'),
+  },
+];
 const Event = () => {
   return (
-    <div
-      className='bg-cover h-screen w-full  bottom-32 relative rounded-b-3xl flex items-center justify-center'
-      style={{ backgroundImage: `url(${bg})` }}
-    >
-      Sự Kiện
+    <div>
+      <Navbar />
+      <section className='bg-bgImg bg-cover bg-center  flex justify-center items-center m-10 min-h-[961px]'>
+        <div className='m-auto grid grid-cols-4 gap-x-8 rounded-xl'>
+          {eventList.map((item) => (
+            <CardEvent item={item} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 };
