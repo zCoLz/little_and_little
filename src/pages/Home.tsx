@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import bg from '../img/bg.png';
 import DamSenPark from '../img/DamSenPark.png';
 import Navbar from '../components/Navbar';
 import Edge from '../img/giua.png';
 import iconStar from '../img/IconStart.png';
-const Home = () => {
+import TextField from '../components/TextField';
+import { BiCalendar } from 'react-icons/bi';
+import Star from '../components/Star';
+const Home: React.FC = () => {
+  const [TextFieldValue, setTextFieldValue] = useState('');
+  const handleTextFieldChange = (value: string) => {
+    setTextFieldValue(value);
+  };
+  const stars = [...Array(4)].map((_, i) => (
+    <div className='flex' key={i}>
+      <Star />
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+  ));
   return (
     <>
-      <Navbar />
-      <section className='bg-bgImg bg-cover bg-center  flex justify-center items-center m-10 max-h-[60rem]'>
+      <div className='fixed w-full'>
+        <Navbar />
+      </div>
+      <section className='bg-bgImg bg-cover bg-center  flex justify-center items-center m-10 max-h-screen'>
         <div className='bg-cover h-screen w-full  bottom-32 rounded-border-right '>
           {/* Logo chữ  */}
           <div className='flex gap-[30px] ml-32 mt-16'>
@@ -37,7 +52,9 @@ const Home = () => {
                       consequat a.
                     </p>
                   </div>
-                  <div></div>
+                  <div className='flex justify-center items-center font-bold font-serif text-2xl p-2'>
+                    <div>{stars}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -47,8 +64,82 @@ const Home = () => {
               alt=''
             />
             <div className='bg-[#FFCA7B] rounded-xl pb-4 '>
-              <div className='bg-[#FDE8B3] w-[34rem] h-[36.5rem] rounded-xl top-[340px] p-1'>
-                <div className='bg-bgCustom w-[31rem] h-[35rem] rounded-[30px] mt-2 ml-6 border-dashed border-2 border-[#FFB489]'></div>
+              <div className='bg-[#FDE8B3] w-[34rem] h-[36.5rem] rounded-xl  p-1'>
+                <div className='bg-bgCustom w-[31rem] h-[35rem] rounded-[30px] mt-2 ml-6 border-dashed border-2 border-[#FFB489]'>
+                  <div className='flex justify-center'>
+                    <div className='bg-bgTitle w-[18rem] h-[5rem]  left-1/2 top-1/2 transform -translate-y-1/2 rounded-b-[60%] rounded-lg'>
+                      <div className='w-[17rem] h-[4.5rem] ml-2 rounded-b-[60%] mt-1 rounded-t-lg border-dashed border-2 border-whiteText flex justify-center items-center'>
+                        <p className='text-whiteText text-2xl font-sans'>
+                          VÉ CỦA BẠN
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='p-5 grid gap-y-5'>
+                    <div className='border-transparent '>
+                      <TextField
+                        className='w-full bg-bgCard rounded-lg shadow-inner p-3'
+                        placeholder='Gói gia đình'
+                        value={TextFieldValue}
+                        onChange={handleTextFieldChange}
+                      />
+                    </div>
+                    <div className='flex justify-between '>
+                      <div className=''>
+                        <TextField
+                          className='w-36 bg-bgCard rounded-lg shadow-inner p-3'
+                          placeholder='Số lượng'
+                          value={TextFieldValue}
+                          onChange={handleTextFieldChange}
+                        />
+                      </div>
+                      <div className='flex relative'>
+                        <div>
+                          <TextField
+                            className='w-56 bg-bgCard rounded-lg shadow-inner p-3'
+                            placeholder='Ngày sử dụng'
+                            value={TextFieldValue}
+                            onChange={handleTextFieldChange}
+                          />
+                        </div>
+                        <div className='ml-2 bg-yellow-400 text-whiteText font-bold text-2xl py-2 px-3 rounded-md shadow- cursor-pointer top-0 left-0'>
+                          <BiCalendar />
+                        </div>
+                      </div>
+                    </div>
+                    <div className='border-transparent '>
+                      <TextField
+                        className='w-full bg-bgCard rounded-lg shadow-inner p-3'
+                        placeholder='Họ và tên'
+                        value={TextFieldValue}
+                        onChange={handleTextFieldChange}
+                      />
+                    </div>
+                    <div className='border-transparent '>
+                      <TextField
+                        className='w-full bg-bgCard rounded-lg shadow-inner p-3'
+                        placeholder='Số điện thoại'
+                        value={TextFieldValue}
+                        onChange={handleTextFieldChange}
+                      />
+                    </div>
+                    <div className='border-transparent '>
+                      <TextField
+                        className='w-full bg-bgCard rounded-lg shadow-inner p-3'
+                        placeholder='Địa chỉ Email'
+                        value={TextFieldValue}
+                        onChange={handleTextFieldChange}
+                      />
+                    </div>
+                    <div className='flex justify-center'>
+                      <div className='bg-[#BD000B] rounded-lg pb-2 '>
+                        <div className='w-96 bg-red rounded-lg p-3 text-center font-sans text-2xl text-whiteText'>
+                          <Link to='/booking'>Đặt Vé</Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

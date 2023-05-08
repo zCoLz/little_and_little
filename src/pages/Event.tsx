@@ -37,10 +37,17 @@ const Event = () => {
     <div>
       <Navbar />
       <section className='bg-bgImg bg-cover bg-center  flex justify-center items-center m-10 min-h-[961px]'>
-        <div className='m-auto grid grid-cols-4 gap-x-8 rounded-xl'>
-          {eventList.map((item) => (
-            <CardEvent item={item} />
-          ))}
+        <div className='flex justify-center flex-col '>
+          <div className='text-center mb-28'>
+            <h1 className='text-8xl font-sans text-whiteText '>
+              Sự Kiện Nổi Bật
+            </h1>
+          </div>
+          <div className='m-auto grid grid-cols-4 gap-x-8 rounded-xl'>
+            {eventList.map((item) => (
+              <CardEvent item={item} />
+            ))}
+          </div>
         </div>
       </section>
     </div>
