@@ -41,7 +41,7 @@ const Payment: React.FC = () => {
           </div>
           <div className='flex justify-center items-center'>
             <div className='bg-[#FFCA7B] rounded-xl pb-4 '>
-              <div className='bg-[#FDE8B3] lg:min-w-[30rem] xl:min-w-[40rem] 2xl:min-w-[50rem] min-h-[36.5rem] rounded-xl top-[21rem] p-1'>
+              <div className='bg-[#FDE8B3] lg:min-w-[30rem] xl:min-w-[40rem] 2xl:min-w-[50rem] min-h-[36.5rem] rounded-xl top-[21rem] px-4 py-2'>
                 <div className='bg-bgCustom w-full h-[36rem] rounded-[30px]  border-dashed border-2 border-[#FFB489]'>
                   <div className='w-full p-5'>
                     <div className='grid grid-cols-3 gap-4 py-5'>
@@ -121,10 +121,15 @@ const Payment: React.FC = () => {
                 </div>
               </div>
             </div>
+            <img
+              src={Edge}
+              className='flex ml-[-40px] mr-[-95px]  h-[584px] mb-4'
+              alt=''
+            />
             <div className='grid gap-y-2'>
               <div className='bg-[#FFCA7B] rounded-xl pb-4 ml-6'>
-                <div className='bg-[#FDE8B3] lg:min-w-[20rem] xl:min-w-[30rem] 2xl:min-w-[32rem] min-h-[36.5rem] rounded-xl px-2 py-2 '>
-                  <div className='bg-bgCustom w-full h-[35.5rem] rounded-[30px]  border-dashed border-2 border-[#FFB489]'>
+                <div className='bg-[#FDE8B3] lg:min-w-[20rem] xl:min-w-[30rem] 2xl:min-w-[32rem] min-h-[36.5rem] rounded-xl px-4 py-2 '>
+                  <div className='bg-bgCustom w-full h-[36rem] rounded-[30px]  border-dashed border-2 border-[#FFB489]'>
                     <div className='flex justify-center'>
                       <div className='bg-bgTitle w-[20rem] h-[4rem]  left-1/2 top-1/2 transform -translate-y-1/2 rounded-b-[60%] rounded-lg'>
                         <div className='w-[19rem] h-[3.5rem] ml-2 rounded-b-[60%] mt-1 rounded-t-lg border-dashed border-2 border-whiteText flex justify-center items-center'>
