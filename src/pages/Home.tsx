@@ -10,24 +10,21 @@ import { BiCalendar } from 'react-icons/bi';
 import Star from '../components/Star';
 import TextFieldNumber from '../components/TextFieldNumber';
 import TextFieldPhone from '../components/TextFieldPhone';
+import DateTextField from '../components/DateTextField';
+import PackageSelect from '../components/PackageSelect';
 
 const Home: React.FC = () => {
-  const [TextFieldValue, setTextFieldValue] = useState('');
   const [TextFieldValueQuantity, setTextFieldValueQuantity] =
     useState<number>(0);
-  const [TextFieldValueDate, setTextFieldValueDate] = useState<number>(0);
+
   const [TextFieldValueName, setTextFieldValueName] = useState('');
   const [TextFieldValuePhone, setTextFieldValuePhone] = useState<string>('');
   const [TextFieldValueMail, setTextFieldValueMail] = useState('');
-  const handleTextFieldChange = (value: string) => {
-    setTextFieldValue(value);
-  };
+
   const handleTextFieldChangeQuantity = (value: number) => {
     setTextFieldValueQuantity(value);
   };
-  const handleTextFieldChangeDate = (value: number) => {
-    setTextFieldValueDate(value);
-  };
+
   const handleTextFieldChangeName = (value: string) => {
     setTextFieldValueName(value);
   };
@@ -92,21 +89,22 @@ const Home: React.FC = () => {
                 <div className='bg-bgCustom w-[31rem] h-[35rem] rounded-[30px] mt-2 ml-6 border-dashed border-2 border-[#FFB489]'>
                   <div className='flex justify-center'>
                     <div className='bg-bgTitle w-[18rem] h-[5rem]  left-1/2 top-1/2 transform -translate-y-1/2 rounded-b-[60%] rounded-lg'>
-                        <div className='w-[17rem] h-[4.5rem] ml-2 rounded-b-[60%] mt-1 rounded-t-lg border-dashed border-2 border-whiteText flex justify-center items-center'>
-                          <p className='text-whiteText text-2xl font-sans'>
-                            VÉ CỦA BẠN
-                          </p>
-                        </div>
+                      <div className='w-[17rem] h-[4.5rem] ml-2 rounded-b-[60%] mt-1 rounded-t-lg border-dashed border-2 border-whiteText flex justify-center items-center'>
+                        <p className='text-whiteText text-2xl font-sans'>
+                          VÉ CỦA BẠN
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div className='p-5 grid gap-y-5'>
                     <div className='border-transparent '>
-                      <TextField
+                      <PackageSelect />
+                      {/* <TextField
                         className='w-full bg-bgCard rounded-lg shadow-inner p-3'
                         placeholder='Gói gia đình'
                         value={TextFieldValue}
                         onChange={handleTextFieldChange}
-                      />
+                      /> */}
                     </div>
                     <div className='flex justify-between '>
                       <div className=''>
@@ -117,15 +115,8 @@ const Home: React.FC = () => {
                           onChange={handleTextFieldChangeQuantity}
                         />
                       </div>
-                      <div className='flex relative'>
-                        <div>
-                          <TextFieldNumber
-                            className='w-56 bg-bgCard rounded-lg shadow-inner p-3'
-                            placeholder='Ngày sử dụng'
-                            value={TextFieldValueDate}
-                            onChange={handleTextFieldChangeDate}
-                          />
-                        </div>
+                      <div className='flex '>
+                        <DateTextField />
                         <div className='ml-2 bg-yellow-400 text-whiteText font-bold text-2xl py-2 px-3 rounded-md shadow- cursor-pointer top-0 left-0'>
                           <BiCalendar />
                         </div>

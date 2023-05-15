@@ -42,8 +42,8 @@ const Contact = () => {
           <div className='flex justify-center items-center'>
             <div className='bg-[#FFCA7B] rounded-xl pb-4 '>
               <div className='bg-[#FDE8B3] lg:min-w-[30rem] xl:min-w-[40rem] 2xl:min-w-[50rem] min-h-[36.5rem] rounded-xl top-[21rem] p-1'>
-                <div className='bg-bgCustom w-full h-[36rem] rounded-[30px]  border-dashed border-2 border-[#FFB489]'>
-                  <div className='w-full p-10'>
+                <div className='bg-bgCustom w-full h-[36rem] rounded-[30px]  border-dashed border-2 border-[#FFB489] '>
+                  <div className='w-full p-10 '>
                     <div className='w-full'>
                       <p className='font-medium text-xl'>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.

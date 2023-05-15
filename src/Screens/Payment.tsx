@@ -5,6 +5,8 @@ import Edge from '../img/giua.png';
 import Navbar from '../components/Navbar';
 import TextFieldPhone from '../components/TextFieldPhone';
 import { Link } from 'react-router-dom';
+import DateTextField from '../components/DateTextField';
+import DateTextFieldPayment from '../components/DateTextFieldPayment';
 const Payment: React.FC = () => {
   const [paymentAmount, setPaymentAmount] = useState<number>(0);
   const [TextFieldValuePhone, setTextFieldValuePhone] = useState('');
@@ -39,12 +41,22 @@ const Payment: React.FC = () => {
               Thanh Toán
             </div>
           </div>
+
           <div className='flex justify-center items-center'>
             <div className='bg-[#FFCA7B] rounded-xl pb-4 '>
               <div className='bg-[#FDE8B3] lg:min-w-[30rem] xl:min-w-[40rem] 2xl:min-w-[50rem] min-h-[36.5rem] rounded-xl top-[21rem] px-4 py-2'>
                 <div className='bg-bgCustom w-full h-[36rem] rounded-[30px]  border-dashed border-2 border-[#FFB489]'>
-                  <div className='w-full p-5'>
-                    <div className='grid grid-cols-3 gap-4 py-5'>
+                  <div className='flex ml-32'>
+                    <div className='bg-bgTitle w-[20rem] h-[4rem]  left-1/2 top-1/2 transform -translate-y-1/2 rounded-b-[60%] rounded-lg'>
+                      <div className='w-[19rem] h-[3.5rem] ml-2 rounded-b-[70%] mt-1 rounded-t-lg border-dashed border-2 border-whiteText flex justify-center items-center'>
+                        <p className='text-whiteText text-2xl font-sans'>
+                          VÉ CỔNG - VÉ GIA ĐÌNH
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='w-full px-10'>
+                    <div className='grid grid-cols-3'>
                       <div className='col-span-1'>
                         <p className='font-bold text-xl mb-2'>
                           <p>Số tiền thanh toán</p>
@@ -74,12 +86,7 @@ const Payment: React.FC = () => {
                         <p className='font-bold text-xl mb-1'>
                           <p>Ngày sử dụng</p>
                         </p>
-                        <TextFieldNumber
-                          className='w-full bg-bgCard rounded-lg shadow-inner p-3'
-                          placeholder='Địa chỉ '
-                          value={TextFieldDate}
-                          onChange={handleTextFieidDate}
-                        />
+                        <DateTextField />
                       </div>
                     </div>
                     <div className='grid gap-y-2'>
@@ -132,7 +139,7 @@ const Payment: React.FC = () => {
                   <div className='bg-bgCustom w-full h-[36rem] rounded-[30px]  border-dashed border-2 border-[#FFB489]'>
                     <div className='flex justify-center'>
                       <div className='bg-bgTitle w-[20rem] h-[4rem]  left-1/2 top-1/2 transform -translate-y-1/2 rounded-b-[60%] rounded-lg'>
-                        <div className='w-[19rem] h-[3.5rem] ml-2 rounded-b-[60%] mt-1 rounded-t-lg border-dashed border-2 border-whiteText flex justify-center items-center'>
+                        <div className='w-[19rem] h-[3.5rem] ml-2 rounded-b-[70%] mt-1 rounded-t-lg border-dashed border-2 border-whiteText flex justify-center items-center'>
                           <p className='text-whiteText text-2xl font-sans'>
                             Thông Tin Thanh Toán
                           </p>
@@ -166,12 +173,7 @@ const Payment: React.FC = () => {
                         <p className='font-bold text-xl mb-1'>
                           <p>Ngày hết hạn</p>
                         </p>
-                        <TextFieldNumber
-                          className='w-full bg-bgCard rounded-lg shadow-inner p-3'
-                          placeholder='Địa chỉ '
-                          value={TextFieldDate}
-                          onChange={handleTextFieidDate}
-                        />
+                        <DateTextFieldPayment />
                       </div>
                       <div className='col-span-1'>
                         <p className='font-bold text-xl mb-2'>
@@ -188,7 +190,7 @@ const Payment: React.FC = () => {
                         <div className='flex justify-center'>
                           <div className='bg-[#BD000B] rounded-lg pb-2 '>
                             <div className='w-96 bg-red rounded-lg p-3 text-center font-sans text-2xl text-whiteText'>
-                              <Link to='/booking'>Thank Toán</Link>
+                              <Link to='/booking/payment'>Thank Toán</Link>
                             </div>
                           </div>
                         </div>

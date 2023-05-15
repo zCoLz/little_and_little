@@ -14,7 +14,7 @@ module.exports = {
       'border-right': '56px',
 
       '3xl': '100px 100px 100px 100px',
-      'border-custom': '0px 0px 35% 35%',
+      'border-custom': '0px 0px 10% 10%',
       customMd: '30px',
       'border-custom-bottom-left-right': '0px 0px 100px 100px',
     },
@@ -30,6 +30,8 @@ module.exports = {
       boxShadow: '#FFCA7B',
       whiteText: '#FFFFFF',
       blackText: '#000000',
+      yellow: '#FFDE32',
+      textYellow: 'rgba(255, 194, 38, 1)',
     },
     backgroundImage: {
       bgImg: "url('./img/bg.png')",
