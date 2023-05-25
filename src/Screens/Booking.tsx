@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TextField from '../components/TextField';
 import TextFieldNumber from '../components/TextFieldNumber';
 import Edge from '../img/giua.png';
@@ -7,30 +7,59 @@ import TextFieldPhone from '../components/TextFieldPhone';
 import { Link } from 'react-router-dom';
 import DateTextField from '../components/DateTextField';
 import DateTextFieldPayment from '../components/DateTextFieldPayment';
-const Payment: React.FC = () => {
-  const [paymentAmount, setPaymentAmount] = useState<number>(0);
-  const [TextFieldValuePhone, setTextFieldValuePhone] = useState('');
-  const [TextFieldContactInfo, setTextFieldContactInfo] = useState('');
-  const [TextFieldQuantityTicket, setTextFieldQuantityTicket] =
-    useState<number>(0);
-  const [TextFieldDate, setTextFieldDate] = useState<number>(0);
 
-  const handTextFieldPhone = (value: string) => {
-    setTextFieldValuePhone(value);
-  };
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+} from 'firebase/firestore';
+import { db } from '../firebase';
+import {
+  setDate,
+  setEmail,
+  setName,
+  setPhone,
+  setQuantity,
+} from '../store/reducer/ticketSlice';
+import { DatePicker, Input } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+
+const Booking: React.FC = () => {
+  const [paymentAmount, setPaymentAmount] = useState<number>(0);
+  const [TextFieldContactInfo, setTextFieldContactInfo] = useState('');
+
+  const dispatch = useDispatch();
+  const { name, date, email, phone, quantity } = useSelector(
+    (state: RootState) => state.ticket
+  );
+
+  useEffect(() => {
+    const fetchDocument = async () => {
+      const querySnapshot = await getDocs(collection(db, 'tickets'));
+      querySnapshot.forEach((doc) => {
+        const documentData = doc.data();
+
+        dispatch(setName(documentData.name));
+        dispatch(setDate(documentData.date));
+        dispatch(setEmail(documentData.email));
+        dispatch(setPhone(documentData.phone));
+        dispatch(setQuantity(documentData.quantity));
+        const calculatedPaymentAmount = documentData.quantity * 55000;
+        setPaymentAmount(calculatedPaymentAmount);
+        return; // Break the loop after getting the first document
+      });
+    };
+
+    fetchDocument();
+  }, [dispatch]);
 
   const handleTextFieidPaymentAmount = (value: number) => {
     setPaymentAmount(value);
   };
-  const handleTextFieidQuantityTicket = (value: number) => {
-    setTextFieldQuantityTicket(value);
-  };
-  const handleTextFieidDate = (value: number) => {
-    setTextFieldDate(value);
-  };
-  const handTextFieldConatactInfo = (value: string) => {
-    setTextFieldContactInfo(value);
-  };
+
   return (
     <div>
       <Navbar />
@@ -59,67 +88,58 @@ const Payment: React.FC = () => {
                     <div className='grid grid-cols-3'>
                       <div className='col-span-1'>
                         <p className='font-bold text-xl mb-2'>
-                          <p>Số tiền thanh toán</p>
+                          Số tiền thanh toán
                         </p>
                         <TextFieldNumber
                           className='w-full bg-bgCard rounded-lg shadow-inner p-3'
-                          placeholder='Địa chỉ '
+                          placeholder='Số tiền thanh toán'
                           value={paymentAmount}
                           onChange={handleTextFieidPaymentAmount}
                         />
                       </div>
                       <div className='col-span-1 ml-10'>
-                        <p className='font-bold text-xl mb-2'>
-                          <p>Số lượng vé</p>
-                        </p>
+                        <p className='font-bold text-xl mb-2'>Số lượng vé</p>
                         <div className='flex items-center'>
-                          <TextFieldNumber
-                            className='bg-bgCard rounded-lg shadow-inner p-3 w-24'
-                            placeholder='Địa chỉ '
-                            value={TextFieldQuantityTicket}
-                            onChange={handleTextFieidQuantityTicket}
+                          <Input
+                            className='w-24 bg-bgCard rounded-lg shadow-inner p-3   border-none'
+                            value={quantity}
                           />
                           <span className='font-semibold text-lg ml-2'>vé</span>
                         </div>
                       </div>
                       <div className='col-span-1'>
-                        <p className='font-bold text-xl mb-1'>
-                          <p>Ngày sử dụng</p>
-                        </p>
-                        <DateTextField />
+                        <p className='font-bold text-xl mb-1'>Ngày sử dụng</p>
+                        <DatePicker
+                          className='w-56 bg-bgCard rounded-lg shadow-inner p-3 outline-none'
+                          placeholder='Chọn ngày sử dụng'
+                          format='DD/MM/YYYY'
+                        />
                       </div>
                     </div>
                     <div className='grid gap-y-2'>
                       <p className='font-bold text-xl mt-3'>
-                        <p>Thông tin liên hệ</p>
+                        Thông tin liên hệ
                       </p>
-                      <TextField
+                      <Input
                         className='w-96 bg-bgCard rounded-lg shadow-inner p-3'
                         placeholder='Thông tin liên hệ'
-                        value={TextFieldContactInfo}
-                        onChange={handTextFieldConatactInfo}
+                        value={name}
                       />
                     </div>
                     <div className='grid gap-y-2'>
-                      <p className='font-bold text-xl mt-3'>
-                        <p>Số điện thoại</p>
-                      </p>
-                      <TextFieldPhone
-                        className='w-52 bg-bgCard rounded-lg shadow-inner p-3'
-                        placeholder='Số điện thoại '
-                        value={TextFieldValuePhone}
-                        onChange={handTextFieldPhone}
+                      <p className='font-bold text-xl mt-3'>Số điện thoại</p>
+                      <Input
+                        className='w-52 bg-bgCard rounded-lg shadow-inner p-3   border-none'
+                        placeholder='Số điện thoại'
+                        value={phone}
                       />
                     </div>
                     <div className='grid gap-y-2'>
-                      <p className='font-bold text-xl mt-3'>
-                        <p>Email</p>
-                      </p>
-                      <TextFieldPhone
-                        className='w-96 bg-bgCard rounded-lg shadow-inner p-3'
+                      <p className='font-bold text-xl mt-3'>Email</p>
+                      <Input
+                        className='w-96 bg-bgCard rounded-lg shadow-inner p-3  border-none'
                         placeholder='Email'
-                        value={TextFieldValuePhone}
-                        onChange={handTextFieldPhone}
+                        value={email}
                       />
                     </div>
                   </div>
@@ -148,49 +168,35 @@ const Payment: React.FC = () => {
                     </div>
                     <div className='px-5 grid gap-y-3'>
                       <div className='col-span-1'>
-                        <p className='font-bold text-xl mb-2'>
-                          <p>Số thẻ</p>
-                        </p>
-                        <TextFieldNumber
+                        <p className='font-bold text-xl mb-2'>Số thẻ</p>
+                        <Input
                           className='w-full bg-bgCard rounded-lg shadow-inner p-3'
-                          placeholder='Địa chỉ '
-                          value={paymentAmount}
-                          onChange={handleTextFieidPaymentAmount}
+                          placeholder='Số thẻ'
                         />
                       </div>
-                      <div className='grid gap-y-3'>
-                        <p className='font-bold text-xl mt-3'>
-                          <p>Họ tên chủ thẻ</p>
-                        </p>
-                        <TextFieldPhone
-                          className='w-96 bg-bgCard rounded-lg shadow-inner p-3'
-                          placeholder='Email'
-                          value={TextFieldValuePhone}
-                          onChange={handTextFieldPhone}
+                      <div className='grid gap-y-3 '>
+                        <p className='font-bold text-xl mt-3'>Họ tên chủ thẻ</p>
+                        <Input
+                          className=' bg-bgCard rounded-lg shadow-inner p-3 w-full'
+                          placeholder='Họ tên chủ thẻ'
                         />
                       </div>
                       <div className='col-span-1'>
-                        <p className='font-bold text-xl mb-1'>
-                          <p>Ngày hết hạn</p>
-                        </p>
+                        <p className='font-bold text-xl mb-1'>Ngày hết hạn</p>
                         <DateTextFieldPayment />
                       </div>
                       <div className='col-span-1'>
-                        <p className='font-bold text-xl mb-2'>
-                          <p>CVV/CVC</p>
-                        </p>
-                        <TextFieldNumber
-                          className='w-32 bg-bgCard rounded-lg shadow-inner p-3'
-                          placeholder='Địa chỉ '
-                          value={paymentAmount}
-                          onChange={handleTextFieidPaymentAmount}
+                        <p className='font-bold text-xl mb-2'>CVV/CVC</p>
+                        <Input
+                          className='w-32 bg-bgCard rounded-lg shadow-inner p-2 text-lg font-bold'
+                          placeholder='***'
                         />
                       </div>
                       <div>
                         <div className='flex justify-center'>
                           <div className='bg-[#BD000B] rounded-lg pb-2 '>
                             <div className='w-96 bg-red rounded-lg p-3 text-center font-sans text-2xl text-whiteText'>
-                              <Link to='/booking/payment'>Thank Toán</Link>
+                              <Link to='/booking/payment'>Thanh Toán</Link>
                             </div>
                           </div>
                         </div>
@@ -207,4 +213,4 @@ const Payment: React.FC = () => {
   );
 };
 
-export default Payment;
+export default Booking;

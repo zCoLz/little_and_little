@@ -6,15 +6,17 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Event from './pages/Event';
 import Contact from './pages/Contact';
-import Payment from './Screens/Payment';
+import Payment from './Screens/Booking';
 import DetailsEvent from './Screens/DetailsEvent';
 import QRPayment from './Screens/QRPayment';
+import Booking from './Screens/Booking';
 
 function App() {
   return (
     <div className='App'>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/payment' element={<Booking />}></Route>
         <Route path='/event' element={<Event />} />
         <Route path='/event/xem-chi-tiet' element={<DetailsEvent />} />
         <Route path='/Contact' element={<Contact />} />

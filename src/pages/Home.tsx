@@ -1,51 +1,115 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import bg from '../img/bg.png';
 import DamSenPark from '../img/DamSenPark.png';
 import Navbar from '../components/Navbar';
 import Edge from '../img/giua.png';
-import iconStar from '../img/IconStart.png';
 import TextField from '../components/TextField';
 import { BiCalendar } from 'react-icons/bi';
 import Star from '../components/Star';
 import TextFieldNumber from '../components/TextFieldNumber';
 import TextFieldPhone from '../components/TextFieldPhone';
-import DateTextField from '../components/DateTextField';
-import PackageSelect from '../components/PackageSelect';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import Lisa from '../img/LisaAmold.png';
+import KC5 from '../img/KC5.png';
+import KC1 from '../img/KC1.png';
+import KC2 from '../img/KC2.png';
+import NhungDuaTre from '../img/NhungDuaTre.png';
 
+import {
+  setDate,
+  setEmail,
+  setName,
+  setPackage,
+  setPhone,
+  setQuantity,
+} from '../store/reducer/ticketSlice';
+import { db } from '../firebase'; // Import đường dẫn tới file kết nối Firestore
+import { collection, addDoc } from 'firebase/firestore';
+import { DatePicker, Select } from 'antd';
+const { Option } = Select;
 const Home: React.FC = () => {
-  const [TextFieldValueQuantity, setTextFieldValueQuantity] =
-    useState<number>(0);
+  const [isvalue, setIsValue] = useState('Gói gia đình');
+  const handleDateChange = (date: any, dateString: string) => {
+    // Handle date change here
+    console.log('Select Date', date);
+    console.log('Formatted date:', dateString);
+  };
+  const handleSelectChange = (isvalue: string) => {
+    // Handle select change here
+    console.log('Selected value:', isvalue);
+    setIsValue(isvalue);
+  };
+  const dispatch = useDispatch();
+  const { quantity, name, phone, email } = useSelector(
+    (state: RootState) => state.ticket
+  );
 
-  const [TextFieldValueName, setTextFieldValueName] = useState('');
-  const [TextFieldValuePhone, setTextFieldValuePhone] = useState<string>('');
-  const [TextFieldValueMail, setTextFieldValueMail] = useState('');
-
+  const ticket = useSelector((state: RootState) => state.ticket);
   const handleTextFieldChangeQuantity = (value: number) => {
-    setTextFieldValueQuantity(value);
+    dispatch(setQuantity(value));
   };
 
   const handleTextFieldChangeName = (value: string) => {
-    setTextFieldValueName(value);
+    dispatch(setName(value));
   };
   const handleTextFieldChangePhone = (value: string) => {
-    setTextFieldValuePhone(value);
+    dispatch(setPhone(value));
   };
   const handleTextFieldChangeMail = (value: string) => {
-    setTextFieldValueMail(value);
+    dispatch(setEmail(value));
   };
+  const handlePackageSelectChange = (value: string) => {
+    dispatch(setPackage(value));
+  };
+  const handleChangeDate = (date: any, dateString: string) => {
+    dispatch(setDate(dateString));
+  };
+
+  const navigate = useNavigate();
+  const handleFormSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    try {
+      // Thêm dữ liệu vào Firestore
+      const docRef = await addDoc(collection(db, 'tickets'), {
+        name: ticket.name,
+        phone: ticket.phone,
+        email: ticket.email,
+        quantity: ticket.quantity,
+        package: ticket.package,
+        date: ticket.date,
+      });
+
+      console.log('Document written with ID: ', docRef.id);
+
+      // Reset các trường text field
+      dispatch(setName(''));
+      dispatch(setPhone(''));
+      dispatch(setEmail(''));
+      dispatch(setQuantity(0));
+      dispatch(setPackage(''));
+      dispatch(setDate(''));
+      navigate('/booking');
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
+  };
+
   const stars = [...Array(4)].map((_, i) => (
     <div className='flex' key={i}>
       <Star />
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     </div>
   ));
+
   return (
     <>
-      <div className='fixed w-full'>
+      <div className='fixed w-full z-50'>
         <Navbar />
       </div>
-      <section className='bg-bgImg bg-cover bg-center  flex justify-center items-center m-10 max-h-screen'>
+      <section className='bg-bgImg bg-cover bg-center flex justify-center items-center m-10 max-h-screen relative'>
         <div className='bg-cover h-screen w-full  bottom-32 rounded-border-right '>
           {/* Logo chữ  */}
           <div className='flex gap-[30px] ml-32 mt-16'>
@@ -56,7 +120,7 @@ const Home: React.FC = () => {
               Đầm Sen <br /> Park
             </div>
           </div>
-          <div className='flex gap-[30px] items-center ml-32  mt-20  '>
+          <div className='flex gap-[30px] items-center ml-32  mt-20  z-40'>
             <div className='bg-[#FFCA7B] rounded-xl pb-4 '>
               <div className='bg-[#FDE8B3] min-w-[60rem] min-h-[36.5rem] rounded-xl top-[21rem] p-1'>
                 <div className='bg-bgCustom w-[56.25rem] h-[35rem] rounded-[30px] mt-2 ml-2 border-dashed border-2 border-[#FFB489]'>
@@ -73,8 +137,24 @@ const Home: React.FC = () => {
                       consequat a.
                     </p>
                   </div>
+
                   <div className='flex justify-center items-center font-bold font-serif text-2xl p-2'>
                     <div>{stars}</div>
+                  </div>
+                  <div className='absolute bottom-[580px]  left-[1000px] z-0'>
+                    <img src={NhungDuaTre} alt='' />
+                  </div>
+                  <div className='absolute bottom-[480px] left-[-20px] '>
+                    <img src={KC5} alt='' />
+                  </div>
+                  <div className='absolute bottom-[690px] left-[900px] '>
+                    <img src={KC1} alt='' />
+                  </div>
+                  <div className='absolute bottom-[680px] left-[720px] z-0'>
+                    <img src={KC2} alt='' />
+                  </div>
+                  <div className='absolute bottom-[10px] left-[-50px] '>
+                    <img className=' w-72' src={Lisa} alt='' />
                   </div>
                 </div>
               </div>
@@ -84,7 +164,7 @@ const Home: React.FC = () => {
               className='flex ml-[-70px] mr-[-100px]  h-[584px] mb-4'
               alt=''
             />
-            <div className='bg-[#FFCA7B] rounded-xl pb-4 '>
+            <div className='bg-[#FFCA7B] rounded-xl pb-4 z-40'>
               <div className='bg-[#FDE8B3] w-[34rem] h-[36.5rem] rounded-xl  p-1'>
                 <div className='bg-bgCustom w-[31rem] h-[35rem] rounded-[30px] mt-2 ml-6 border-dashed border-2 border-[#FFB489]'>
                   <div className='flex justify-center'>
@@ -98,25 +178,33 @@ const Home: React.FC = () => {
                   </div>
                   <div className='p-5 grid gap-y-5'>
                     <div className='border-transparent '>
-                      <PackageSelect />
-                      {/* <TextField
-                        className='w-full bg-bgCard rounded-lg shadow-inner p-3'
-                        placeholder='Gói gia đình'
-                        value={TextFieldValue}
-                        onChange={handleTextFieldChange}
-                      /> */}
+                      <Select
+                        defaultValue={isvalue}
+                        onChange={handlePackageSelectChange}
+                        bordered={false}
+                        className='w-full bg-bgCard rounded-lg  p-2'
+                      >
+                        <Option value='Gói gia đình'>Gói gia đình</Option>
+                        <Option value='Gói cá nhân'>Gói cá nhân</Option>
+                      </Select>
                     </div>
                     <div className='flex justify-between '>
                       <div className=''>
                         <TextFieldNumber
                           className='w-36 bg-bgCard rounded-lg shadow-inner p-3'
                           placeholder='Số lượng'
-                          value={TextFieldValueQuantity}
+                          value={quantity}
                           onChange={handleTextFieldChangeQuantity}
                         />
                       </div>
                       <div className='flex '>
-                        <DateTextField />
+                        <DatePicker
+                          onChange={handleChangeDate}
+                          className='w-56 bg-bgCard rounded-lg shadow-inner p-3 outline-none'
+                          placeholder='Chọn ngày sử dụng'
+                          format='DD/MM/YYYY'
+                        />
+
                         <div className='ml-2 bg-yellow-400 text-whiteText font-bold text-2xl py-2 px-3 rounded-md shadow- cursor-pointer top-0 left-0'>
                           <BiCalendar />
                         </div>
@@ -126,7 +214,7 @@ const Home: React.FC = () => {
                       <TextField
                         className='w-full bg-bgCard rounded-lg shadow-inner p-3'
                         placeholder='Họ và tên'
-                        value={TextFieldValueName}
+                        value={name}
                         onChange={handleTextFieldChangeName}
                       />
                     </div>
@@ -134,7 +222,7 @@ const Home: React.FC = () => {
                       <TextFieldPhone
                         className='w-full bg-bgCard rounded-lg shadow-inner p-3'
                         placeholder='Số điện thoại'
-                        value={TextFieldValuePhone}
+                        value={phone}
                         onChange={handleTextFieldChangePhone}
                       />
                     </div>
@@ -142,14 +230,16 @@ const Home: React.FC = () => {
                       <TextField
                         className='w-full bg-bgCard rounded-lg shadow-inner p-3'
                         placeholder='Địa chỉ Email'
-                        value={TextFieldValueMail}
+                        value={email}
                         onChange={handleTextFieldChangeMail}
                       />
                     </div>
                     <div className='flex justify-center'>
-                      <div className='bg-[#BD000B] rounded-lg pb-2 '>
-                        <div className='w-96 bg-red rounded-lg p-3 text-center font-sans text-2xl text-whiteText'>
-                          <Link to='/booking'>Đặt Vé</Link>
+                      <div className='bg-[#BD000B] rounded-lg pb-2 w-80'>
+                        <div className='bg-red rounded-lg p-3 text-center font-sans text-2xl text-whiteText'>
+                          <button onClick={handleFormSubmit} className=''>
+                            Đặt Vé
+                          </button>
                         </div>
                       </div>
                     </div>

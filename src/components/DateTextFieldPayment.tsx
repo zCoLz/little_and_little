@@ -14,7 +14,7 @@ const DateTextFieldPayment = () => {
     <>
       <div className='flex'>
         <DatePicker
-          className='w-56 bg-bgCard rounded-lg shadow-inner p-3 outline-none'
+          className='w-80 bg-bgCard rounded-lg shadow-inner p-3 outline-none'
           placeholder='Ngày hết hạn'
           onChange={handleDateChange}
           format='DD/MM/YYYY'
