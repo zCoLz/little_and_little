@@ -6,7 +6,25 @@ const QRList = [
   {
     title: 'VÉ CỔNG',
     code: 'ALT20210501',
-    datetime: 'Ngày sử dụng: 31/05/2021',
+    datetime: 'Ngày sử dụng: 31/05/2023',
+    img: require('../img/QrCode.png'),
+  },
+  {
+    title: 'VÉ CỔNG',
+    code: 'ALT20210502',
+    datetime: 'Ngày sử dụng: 31/05/2023',
+    img: require('../img/QrCode.png'),
+  },
+  {
+    title: 'VÉ CỔNG',
+    code: 'ALT20210503',
+    datetime: 'Ngày sử dụng: 31/05/2023',
+    img: require('../img/QrCode.png'),
+  },
+  {
+    title: 'VÉ CỔNG',
+    code: 'ALT20210504',
+    datetime: 'Ngày sử dụng: 31/05/2023',
     img: require('../img/QrCode.png'),
   },
 ];
@@ -40,11 +58,9 @@ const QRPayment = () => {
                 </div>
                 <div className='flex justify-between mx-24'>
                   <div className=' font-semibold opacity-70 pb-2'>
-                    Số lượng: 12 vé
+                    Số lượng: 4 vé
                   </div>
-                  <div className=' font-semibold opacity-50 pb-2'>
-                    Trang 1/3
-                  </div>
+                  <div className=' font-semibold opacity-50 pb-2'>Trang 1</div>
                 </div>
               </div>
             </div>
