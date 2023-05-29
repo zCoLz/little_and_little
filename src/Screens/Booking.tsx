@@ -27,7 +27,11 @@ import {
 import { DatePicker, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { setCardNumber, setNameCard } from '../store/reducer/paymentSlice';
+import {
+  setCardNumber,
+  setExpirationDate,
+  setNameCard,
+} from '../store/reducer/paymentSlice';
 
 const Booking: React.FC = () => {
   const [paymentAmount, setPaymentAmount] = useState<number>(0);
@@ -37,7 +41,9 @@ const Booking: React.FC = () => {
   const { name, date, email, phone, quantity } = useSelector(
     (state: RootState) => state.ticket
   );
-  const { namecard, cardnumber } = useSelector(
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const { namecard, cardnumber, expirationdate } = useSelector(
     (state: RootState) => state.payment
   );
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +55,10 @@ const Booking: React.FC = () => {
     const value = e.target.value;
     dispatch(setNameCard(value));
   };
+  const handleChangeExpirationDate = (date: any, dateString: string) => {
+    dispatch(setExpirationDate(dateString));
+  };
+
   useEffect(() => {
     const fetchTickets = async () => {
       const querySnapshot = await getDocs(collection(db, 'tickets'));
@@ -73,7 +83,7 @@ const Booking: React.FC = () => {
 
         dispatch(setCardNumber(documentData.cardnumber));
         dispatch(setNameCard(documentData.namecard));
-
+        dispatch(setExpirationDate(documentData.expirationdate));
         return;
       });
     };
@@ -85,6 +95,7 @@ const Booking: React.FC = () => {
     const paymentData = {
       cardnumber,
       namecard,
+      expirationdate,
     };
 
     try {
@@ -247,7 +258,12 @@ const Booking: React.FC = () => {
                       </div>
                       <div className='col-span-1'>
                         <p className='font-bold text-xl mb-1'>Ngày hết hạn</p>
-                        <DateTextFieldPayment />
+                        <DatePicker
+                          className='w-80 bg-bgCard rounded-lg shadow-inner p-3 outline-none'
+                          placeholder='Ngày hết hạn'
+                          format='DD/MM/YYYY'
+                          onChange={handleChangeExpirationDate}
+                        />
                       </div>
                       <div className='col-span-1'>
                         <p className='font-bold text-xl mb-2'>CVV/CVC</p>

@@ -3,10 +3,12 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 interface PaymentState {
   cardnumber: number;
   namecard: string;
+  expirationdate: string;
 }
 const initialState: PaymentState = {
   cardnumber: 0,
   namecard: '',
+  expirationdate: '',
 };
 
 const paymentSlice = createSlice({
@@ -19,7 +21,11 @@ const paymentSlice = createSlice({
     setNameCard: (state, action: PayloadAction<string>) => {
       state.namecard = action.payload;
     },
+    setExpirationDate: (state, action: PayloadAction<string>) => {
+      state.expirationdate = action.payload;
+    },
   },
 });
-export const { setCardNumber, setNameCard } = paymentSlice.actions;
+export const { setCardNumber, setNameCard, setExpirationDate } =
+  paymentSlice.actions;
 export default paymentSlice.reducer;

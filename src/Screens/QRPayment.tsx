@@ -9,24 +9,6 @@ const QRList = [
     datetime: 'Ngày sử dụng: 31/05/2023',
     img: require('../img/QrCode.png'),
   },
-  {
-    title: 'VÉ CỔNG',
-    code: 'ALT20210502',
-    datetime: 'Ngày sử dụng: 31/05/2023',
-    img: require('../img/QrCode.png'),
-  },
-  {
-    title: 'VÉ CỔNG',
-    code: 'ALT20210503',
-    datetime: 'Ngày sử dụng: 31/05/2023',
-    img: require('../img/QrCode.png'),
-  },
-  {
-    title: 'VÉ CỔNG',
-    code: 'ALT20210504',
-    datetime: 'Ngày sử dụng: 31/05/2023',
-    img: require('../img/QrCode.png'),
-  },
 ];
 const QRCodeCard = [...Array(4)].map((_, i) => (
   <div key={i}>
