@@ -7,13 +7,14 @@ import TextFieldPhone from '../components/TextFieldPhone';
 import { Link } from 'react-router-dom';
 import DateTextField from '../components/DateTextField';
 import DateTextFieldPayment from '../components/DateTextFieldPayment';
-
+import Trini from '../img/Trini.png';
 import {
   collection,
   doc,
   getDoc,
   getDocs,
   getFirestore,
+  setDoc,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import {
@@ -26,6 +27,7 @@ import {
 import { DatePicker, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { setCardNumber, setNameCard } from '../store/reducer/paymentSlice';
 
 const Booking: React.FC = () => {
   const [paymentAmount, setPaymentAmount] = useState<number>(0);
@@ -35,9 +37,20 @@ const Booking: React.FC = () => {
   const { name, date, email, phone, quantity } = useSelector(
     (state: RootState) => state.ticket
   );
+  const { namecard, cardnumber } = useSelector(
+    (state: RootState) => state.payment
+  );
+  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value); // Convert the value to a number
+    dispatch(setCardNumber(value));
+  };
 
+  const handleNameCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    dispatch(setNameCard(value));
+  };
   useEffect(() => {
-    const fetchDocument = async () => {
+    const fetchTickets = async () => {
       const querySnapshot = await getDocs(collection(db, 'tickets'));
       querySnapshot.forEach((doc) => {
         const documentData = doc.data();
@@ -53,9 +66,53 @@ const Booking: React.FC = () => {
       });
     };
 
-    fetchDocument();
-  }, [dispatch]);
+    const fetchPayments = async () => {
+      const querySnapshot = await getDocs(collection(db, 'payments'));
+      querySnapshot.forEach((doc) => {
+        const documentData = doc.data();
 
+        dispatch(setCardNumber(documentData.cardnumber));
+        dispatch(setNameCard(documentData.namecard));
+
+        return;
+      });
+    };
+
+    fetchTickets();
+    fetchPayments();
+  }, [dispatch]);
+  const handleSubmit = async () => {
+    const paymentData = {
+      cardnumber,
+      namecard,
+    };
+
+    try {
+      // Save the payment data to Firebase
+      await setDoc(doc(db, 'payments', 'paymentId'), paymentData);
+      console.log('Payment data saved successfully!');
+    } catch (error) {
+      console.error('Error saving payment data:', error);
+    }
+  };
+  // const { cardnumber, namecard } = useSelector(
+  //   (state: RootState) => state.payment
+  // );
+  // useEffect(() => {
+  //   const fetchDocumentPayment = async () => {
+  //     const querySnapshot = await getDocs(collection(db, 'payments'));
+  //     querySnapshot.forEach((doc) => {
+  //       const documentData = doc.data();
+
+  //       dispatch(setCardNumber(documentData.cardnumber));
+  //       dispatch(setNameCard(documentData.namecard));
+
+  //       return;
+  //     });
+  //   };
+
+  //   fetchDocumentPayment();
+  // }, [dispatch]);
   const handleTextFieidPaymentAmount = (value: number) => {
     setPaymentAmount(value);
   };
@@ -64,6 +121,9 @@ const Booking: React.FC = () => {
     <div>
       <Navbar />
       <section className='bg-bgImg bg-cover bg-center flex justify-center m-10 min-h-[961px] '>
+        <div className='absolute  mr-[99rem] mt-[16rem]'>
+          <img src={Trini} alt='' />
+        </div>
         <div className='flex mt-32 items-center flex-col'>
           <div className=''>
             <div className='font-sans text-whiteText font-extrabold text-7xl mb-5'>
@@ -171,6 +231,8 @@ const Booking: React.FC = () => {
                         <p className='font-bold text-xl mb-2'>Số thẻ</p>
                         <Input
                           className='w-full bg-bgCard rounded-lg shadow-inner p-3'
+                          value={cardnumber}
+                          onChange={handleCardNumberChange}
                           placeholder='Số thẻ'
                         />
                       </div>
@@ -179,6 +241,8 @@ const Booking: React.FC = () => {
                         <Input
                           className=' bg-bgCard rounded-lg shadow-inner p-3 w-full'
                           placeholder='Họ tên chủ thẻ'
+                          onChange={handleNameCardChange}
+                          value={namecard}
                         />
                       </div>
                       <div className='col-span-1'>
@@ -196,7 +260,12 @@ const Booking: React.FC = () => {
                         <div className='flex justify-center'>
                           <div className='bg-[#BD000B] rounded-lg pb-2 '>
                             <div className='w-96 bg-red rounded-lg p-3 text-center font-sans text-2xl text-whiteText'>
-                              <Link to='/booking/payment'>Thanh Toán</Link>
+                              <Link
+                                to='/booking/payment'
+                                onClick={handleSubmit}
+                              >
+                                Thanh Toán
+                              </Link>
                             </div>
                           </div>
                         </div>

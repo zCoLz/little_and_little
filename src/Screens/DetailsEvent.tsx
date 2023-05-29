@@ -3,12 +3,22 @@ import Navbar from '../components/Navbar';
 import { BiCalendar } from 'react-icons/bi';
 import imgDT1 from '../img/img3.png';
 import imgDT2 from '../img/img2.png';
+import TrangTriTrai from '../img/TrangTriTrai.png';
+import TrangTriPhai from '../img/TrangTriPhai.png';
 const DetailsEvent = () => {
   return (
     <>
       {' '}
       <Navbar />
       <section className='bg-bgImg bg-cover bg-center flex justify-center m-10 min-h-[961px] '>
+        <div className='absolute flex gap-x-[44rem] mb-[36rem]'>
+          <div>
+            <img src={TrangTriTrai} alt='' />
+          </div>
+          <div>
+            <img src={TrangTriPhai} alt='' />
+          </div>
+        </div>
         <div className='flex flex-col justify-center items-center'>
           <div className='mb-10'>
             <p className='font-sans text-7xl text-whiteText'>Sự Kiện 1</p>

@@ -32,6 +32,7 @@ module.exports = {
       blackText: '#000000',
       yellow: '#FFDE32',
       textYellow: 'rgba(255, 194, 38, 1)',
+      textWarning: '#FF000A',
     },
     backgroundImage: {
       bgImg: "url('./img/bg.png')",

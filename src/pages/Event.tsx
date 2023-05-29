@@ -2,6 +2,8 @@ import React from 'react';
 import bg from '../img/bg.png';
 import Navbar from '../components/Navbar';
 import CardEvent from '../components/CardEvent';
+import TrangTriTrai from '../img/TrangTriTrai.png';
+import TrangTriPhai from '../img/TrangTriPhai.png';
 const eventList = [
   {
     title: 'Sự kiện 1',
@@ -36,7 +38,15 @@ const Event = () => {
   return (
     <div>
       <Navbar />
-      <section className='bg-bgImg bg-cover bg-center  flex justify-center items-center m-10 min-h-[961px]'>
+      <section className='relative bg-bgImg bg-cover bg-center  flex justify-center items-center m-10 min-h-[961px] z-0 '>
+        <div className='absolute flex gap-x-[44rem] mb-[36rem]'>
+          <div>
+            <img src={TrangTriTrai} alt='' />
+          </div>
+          <div>
+            <img src={TrangTriPhai} alt='' />
+          </div>
+        </div>
         <div className='flex justify-center flex-col '>
           <div className='text-center mb-28'>
             <h1 className='text-8xl font-sans text-whiteText '>

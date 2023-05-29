@@ -2,12 +2,25 @@ import React, { useState } from 'react';
 import iconAddress from '../img/iconAddress.png';
 import iconMail from '../img/iconMail.png';
 import iconPhone from '../img/iconPhone.png';
+import Aleximg from '../img/Alex.png';
 import Navbar from '../components/Navbar';
 import TextField from '../components/TextField';
 import TextFieldPhone from '../components/TextFieldPhone';
 import NoteArea from '../components/NoteArea';
-import { Link } from 'react-router-dom';
-const Contact = () => {
+import { Link, useNavigate } from 'react-router-dom';
+import { addDoc, collection } from 'firebase/firestore';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { db } from '../firebase';
+
+import {
+  setAddress,
+  setNote,
+  setEmail,
+  setName,
+  setPhone,
+} from '../store/reducer/contactSlice';
+const Contact: React.FC = () => {
   const [TextFieldValueMail, setTextFieldValueMail] = useState('');
   const [TextFieldValueName, setTextFieldValueName] = useState('');
   const [TextFieldValuePhone, setTextFieldValuePhone] = useState('');
@@ -28,11 +41,41 @@ const Contact = () => {
   const handleTextFieldChangeNote = (value: string) => {
     setTextFieldValueNote(value);
   };
+  const dispatch = useDispatch();
+  const { name, note, email, phone, address } = useSelector(
+    (state: RootState) => state.contact
+  );
+
+  const navigate = useNavigate();
+
+  const handleFormSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const docRef = await addDoc(collection(db, 'contacts'), {
+        name: TextFieldValueName,
+        note: TextFieldValueNote,
+        email: TextFieldValueMail,
+        address: TextFieldValueAddress,
+        phone: TextFieldValuePhone,
+      });
+      dispatch(setName(''));
+      dispatch(setNote(''));
+      dispatch(setEmail(''));
+      dispatch(setAddress(''));
+      dispatch(setPhone(''));
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
+  };
+
   return (
     <div>
       <Navbar />
 
       <section className='bg-bgImg bg-cover bg-center flex justify-center m-10 min-h-[961px] '>
+        <div className='absolute mr-[100rem] mt-[17rem]'>
+          <img src={Aleximg} alt='' />
+        </div>
         <div className='flex mt-32 items-center flex-col'>
           <div className=''>
             <div className='font-sans text-whiteText font-extrabold text-7xl mb-5 '>
@@ -94,13 +137,13 @@ const Contact = () => {
                       />
                     </div>
                     <div className='flex justify-center mt-3'>
-                      <Link to='/gui-lien-he'>
+                      <button onClick={handleFormSubmit}>
                         <div className='bg-[#BD000B] rounded-lg pb-1 '>
                           <div className='w-96 bg-red rounded-lg p-3 text-center font-sans text-2xl text-whiteText'>
                             <button>Gửi liên hệ</button>
                           </div>
                         </div>
-                      </Link>
+                      </button>
                     </div>
                   </div>
 

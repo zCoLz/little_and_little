@@ -15,6 +15,8 @@ import Lisa from '../img/LisaAmold.png';
 import KC5 from '../img/KC5.png';
 import KC1 from '../img/KC1.png';
 import KC2 from '../img/KC2.png';
+import KC3 from '../img/KC3.png';
+import KC4 from '../img/KC4.png';
 import NhungDuaTre from '../img/NhungDuaTre.png';
 
 import {
@@ -66,10 +68,60 @@ const Home: React.FC = () => {
   const handleChangeDate = (date: any, dateString: string) => {
     dispatch(setDate(dateString));
   };
+  // const [emailError, setEmailError] = useState(false);
+  // const [phoneError, setPhoneError] = useState(false);
+  // const [nameError, setNameError] = useState(false);
+  // const [quantityError, setQuantityError] = useState(false);
+  // //Validate Form
+  // const isValidName = (value: string) => {
+  //   const nameRegex = /^[a-zA-Z0-9\s]+$/;
+  //   return nameRegex.test(value);
+  // };
+
+  // const isValidQuantity = (value: number) => {
+  //   return value > 1;
+  // };
+  // const isValidEmail = (value: string) => {
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return emailRegex.test(value);
+  // };
+  // const isValidPhoneNumber = (value: string) => {
+  //   const phoneRegex = /^\d{10}$/;
+  //   return phoneRegex.test(value);
+  // };
 
   const navigate = useNavigate();
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    // let hasError = false;
+
+    // if (!isValidPhoneNumber(phone)) {
+    //   setPhoneError(true);
+    // } else {
+    //   setPhoneError(false);
+    // }
+
+    // if (!isValidEmail(email)) {
+    //   setEmailError(true);
+    // } else {
+    //   setEmailError(false);
+    // }
+
+    // if (!isValidName(name)) {
+    //   setNameError(true);
+    // } else {
+    //   setNameError(false);
+    // }
+
+    // if (!isValidQuantity(quantity)) {
+    //   setQuantityError(true);
+    // } else {
+    //   setQuantityError(false);
+    // }
+
+    // if (hasError) {
+    //   return;
+    // }
 
     try {
       // Thêm dữ liệu vào Firestore
@@ -110,6 +162,9 @@ const Home: React.FC = () => {
         <Navbar />
       </div>
       <section className='bg-bgImg bg-cover bg-center flex justify-center items-center m-10 max-h-screen relative'>
+        <div className='absolute ml-[100.5rem]'>
+          <img src={KC4} alt='' />
+        </div>
         <div className='bg-cover h-screen w-full  bottom-32 rounded-border-right '>
           {/* Logo chữ  */}
           <div className='flex gap-[30px] ml-32 mt-16'>
@@ -156,6 +211,12 @@ const Home: React.FC = () => {
                   <div className='absolute bottom-[10px] left-[-50px] '>
                     <img className=' w-72' src={Lisa} alt='' />
                   </div>
+                  <div className='absolute ml-[92rem] mt-10'>
+                    <img src={KC2} alt='' />
+                  </div>
+                  <div className='absolute ml-[28rem] mt-32 z-0'>
+                    <img src={KC3} alt='' />
+                  </div>
                 </div>
               </div>
             </div>
@@ -176,7 +237,7 @@ const Home: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className='p-5 grid gap-y-5'>
+                  <div className='p-5 grid gap-y-4'>
                     <div className='border-transparent '>
                       <Select
                         defaultValue={isvalue}
@@ -188,7 +249,7 @@ const Home: React.FC = () => {
                         <Option value='Gói cá nhân'>Gói cá nhân</Option>
                       </Select>
                     </div>
-                    <div className='flex justify-between '>
+                    <div className='flex justify-between'>
                       <div className=''>
                         <TextFieldNumber
                           className='w-36 bg-bgCard rounded-lg shadow-inner p-3'
@@ -196,6 +257,11 @@ const Home: React.FC = () => {
                           value={quantity}
                           onChange={handleTextFieldChangeQuantity}
                         />
+                        {/* {quantityError && (
+                          <p className='text-textWarning text-xs'>
+                            Vui lòng nhập số lượng {'vé > 0'}
+                          </p>
+                        )} */}
                       </div>
                       <div className='flex '>
                         <DatePicker
@@ -217,6 +283,11 @@ const Home: React.FC = () => {
                         value={name}
                         onChange={handleTextFieldChangeName}
                       />
+                      {/* {nameError && (
+                        <p className='text-textWarning text-xs'>
+                          Vui lòng nhập Họ và Tên
+                        </p>
+                      )} */}
                     </div>
                     <div className='border-transparent '>
                       <TextFieldPhone
@@ -225,6 +296,11 @@ const Home: React.FC = () => {
                         value={phone}
                         onChange={handleTextFieldChangePhone}
                       />
+                      {/* {phoneError && (
+                        <p className='text-textWarning text-sm'>
+                          Vui lòng nhập số điện thoại
+                        </p>
+                      )} */}
                     </div>
                     <div className='border-transparent '>
                       <TextField
@@ -233,6 +309,11 @@ const Home: React.FC = () => {
                         value={email}
                         onChange={handleTextFieldChangeMail}
                       />
+                      {/* {emailError && (
+                        <p className='text-textWarning text-sm'>
+                          Vui lòng nhập email
+                        </p>
+                      )} */}
                     </div>
                     <div className='flex justify-center'>
                       <div className='bg-[#BD000B] rounded-lg pb-2 w-80'>

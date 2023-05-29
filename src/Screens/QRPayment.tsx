@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import CardQRPayment from '../components/CardQRPayment';
-
+import Alvin from '../img/Alvin.png';
 const QRList = [
   {
     title: 'VÉ CỔNG',
@@ -23,6 +23,9 @@ const QRPayment = () => {
       <Navbar />
 
       <section className='bg-bgImg bg-cover bg-center  flex justify-center m-10 min-h-[961px] '>
+        <div className='absolute mr-[100rem] mt-[17rem]'>
+          <img src={Alvin} alt='' />
+        </div>
         <div className='flex flex-col justify-center items-center gap-y-10'>
           <div>
             <p className='text-whiteText text-7xl font-sans'>

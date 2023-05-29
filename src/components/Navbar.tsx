@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     //bg-[#FF7A00]
     <>
-      <header className='h-20  fixed top-0 left-0 right-0'>
+      <header className='h-20  fixed top-0 left-0 right-0 z-50'>
         <div className=' flex justify-between h-full bg-[#FF7A00] rounded-b-[35%] shadow-2xl'>
           <div>
             <Link to='/'>
