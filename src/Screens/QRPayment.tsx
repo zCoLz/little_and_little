@@ -21,7 +21,6 @@ const QRPayment = () => {
   return (
     <>
       <Navbar />
-
       <section className='bg-bgImg bg-cover bg-center  flex justify-center m-10 min-h-[961px] '>
         <div className='absolute mr-[100rem] mt-[17rem]'>
           <img src={Alvin} alt='' />

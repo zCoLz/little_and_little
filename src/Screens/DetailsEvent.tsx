@@ -8,7 +8,6 @@ import TrangTriPhai from '../img/TrangTriPhai.png';
 const DetailsEvent = () => {
   return (
     <>
-      {' '}
       <Navbar />
       <section className='bg-bgImg bg-cover bg-center flex justify-center m-10 min-h-[961px] '>
         <div className='absolute flex gap-x-[44rem] mb-[36rem]'>
